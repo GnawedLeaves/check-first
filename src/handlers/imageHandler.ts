@@ -1,7 +1,10 @@
-import { downloadWhatsAppImage, sendWhatsAppMessage } from "../utils/whatsapp";
-import { detectAI } from "./aiDetection";
-import { scanMetadata } from "./metadataScan";
-import { composeVerdict } from "./verdict";
+import {
+  downloadWhatsAppImage,
+  sendWhatsAppMessage,
+} from "../utils/whatsapp.js";
+import { detectAI } from "./aiDetection.js";
+import { scanMetadata } from "./metadataScan.js";
+import { composeVerdict } from "./verdict.js";
 
 export async function handleWebhook(body: any): Promise<void> {
   const entry = body.entry?.[0]?.changes?.[0]?.value;
