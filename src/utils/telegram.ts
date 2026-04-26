@@ -19,7 +19,10 @@ export function initTelegramBot(): TelegramBot {
     const userId = msg.from?.id || 0;
 
     try {
-      await bot.sendMessage(chatId, "🔍 Scanning image... please wait.");
+      await bot.sendMessage(
+        chatId,
+        "🔍 Chickens are pecking your image... please wait...",
+      );
 
       // Telegram sends multiple sizes — always take the last (highest res)
       const photos = msg.photo!;
@@ -124,14 +127,17 @@ export function initTelegramBot(): TelegramBot {
     await bot.sendMessage(
       msg.chat.id,
       `👋 *Welcome to Check First Lah Bot *\n\n` +
-        `Send me any image and our chicken on duty will tell you:\n` +
+        `Send or forward any image and our chicken on duty* will tell you:\n` +
         `• If looks AI-generated\n` +
         `• If it carries AI tool signatures\n` +
         `• If you should trust it\n\n` +
-        `_Forward images directly from other chats or upload an image. :D_\n\n` +
-        `Commands:\n` +
-        `/stats - See your scanning statistics`,
-      { parse_mode: "Markdown" },
+        `_Forward images directly from other chats or upload an image. 🐓_\n\n` +
+        `*Chickens on duty:\n
+            - Snowie 🐔☃️\n
+            - Queenie 🐔👑\n` +
+        // `Commands:\n` +
+        // `/stats - See your scanning statistics`,
+        { parse_mode: "Markdown" },
     );
   });
 

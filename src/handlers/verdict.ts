@@ -27,20 +27,20 @@ export function composeVerdict(
   if (ai.label === "uncertain") {
     return (
       `⚠️ *Something's Smellin' Fowl...* ⚠️\n\n` +
-      `I'm scratching my head on this one. It *might* be AI-generated.\n` +
+      `${chicken} scratching my head on this one. It *might* be AI-generated.\n` +
       `AI probability: *${pct}%*\n` +
       (meta.isStripped
         ? `📦 *Note:* Metadata was stripped. Hard to see through the coop! \n`
         : "") +
-      `\nBe cautious, little chick. Verify before you trust this image!`
+      `\nBe cautious, check again before you trust this image!`
     );
   }
 
   return (
-    `✅ *${chicken} says it looks Egg-cellent!* ✅\n\n` +
+    `✅ *${chicken} says it looks Egg-cellent!* 🐔☃️✅\n\n` +
     `AI probability: *${pct}%*\n` +
-    `This image seems legit! No foul play detected, though it could still be a sneaky photoshop hehe.\n\n` +
-    `_If you find more suspicious slop, send them to the chicks!_` +
+    `This image seems legit! No _fowl_ play detected, though it could still be a sneaky photoshop pok pok.\n\n` +
+    `_If you find more suspicious slop, send them to the chickies!_` +
     `\n\n_Hatched by marcel (https://marcelyap.dev/)_`
   );
 }
