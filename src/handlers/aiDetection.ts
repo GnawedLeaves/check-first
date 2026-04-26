@@ -39,12 +39,15 @@ export async function detectAI(
     console.log("The Hive API response received");
 
     const outputs = data.output?.[0];
-    if (!outputs) {
+    if (!outputs || !outputs.classes) {
       throw new Error("No output data from The Hive API");
     }
 
-    const aiScore = outputs.predictions?.ai_generated_and_deepfake_content ?? 0;
-    const score: number = aiScore;
+    // Find the ai_generated class in the response
+    const aiClass = outputs.classes.find(
+      (c: any) => c.class === "ai_generated",
+    );
+    const score: number = aiClass?.value ?? 0;
 
     console.log(`AI Detection score: ${score}`);
     return {
