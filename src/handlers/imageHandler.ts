@@ -5,6 +5,7 @@ import {
 import { detectAI } from "./aiDetection.js";
 import { scanMetadata } from "./metadataScan.js";
 import { composeVerdict } from "./verdict.js";
+import { saveImageResult } from "../utils/database.js";
 
 export async function handleWebhook(body: any): Promise<void> {
   const entry = body.entry?.[0]?.changes?.[0]?.value;
@@ -39,6 +40,19 @@ export async function handleWebhook(body: any): Promise<void> {
     await sendWhatsAppMessage(to, "📊 Composing final verdict...");
     const reply = composeVerdict(aiResult, metaResult);
     await sendWhatsAppMessage(to, reply);
+
+    // Save result to Firebase
+    await saveImageResult({
+      chatId: parseInt(to),
+      userId: parseInt(to),
+      isAI: aiResult.label === "ai",
+      aiScore: aiResult.score,
+      label: aiResult.label,
+      hasC2PA: metaResult.hasC2PA,
+      softwareTag: metaResult.softwareTag,
+      createdAt: new Date(),
+      source: "whatsapp",
+    });
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     const stack = err instanceof Error ? err.stack : "";
