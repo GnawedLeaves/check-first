@@ -22,28 +22,48 @@ const AI_GENERATORS = [
 export async function scanMetadata(
   imageBuffer: Buffer,
 ): Promise<MetadataResult> {
-  let rawExif: Record<string, any> = {};
-  let softwareTag: string | null = null;
-  let hasC2PA = false;
-
   try {
-    rawExif =
-      (await exifr.parse(imageBuffer, { xmp: true, iptc: true, icc: true })) ??
-      {};
+    let rawExif: Record<string, any> = {};
+    let softwareTag: string | null = null;
+    let hasC2PA = false;
 
-    // Check Software tag — AI tools often sign their output
-    const software = rawExif.Software?.toLowerCase() ?? "";
-    softwareTag = rawExif.Software ?? null;
-    hasC2PA = "dc:provenance" in rawExif || "c2pa" in rawExif;
+    try {
+      console.log("Parsing EXIF metadata...");
+      rawExif =
+        (await exifr.parse(imageBuffer, {
+          xmp: true,
+          iptc: true,
+          icc: true,
+        })) ?? {};
+      console.log("EXIF data found:", Object.keys(rawExif).length, "fields");
 
-    // Detect known AI generator signatures in software tag
-    if (AI_GENERATORS.some((gen) => software.includes(gen))) {
-      hasC2PA = true; // treat as provenance signal even without formal C2PA
+      // Check Software tag — AI tools often sign their output
+      const software = rawExif.Software?.toLowerCase() ?? "";
+      softwareTag = rawExif.Software ?? null;
+      hasC2PA = "dc:provenance" in rawExif || "c2pa" in rawExif;
+
+      // Detect known AI generator signatures in software tag
+      if (AI_GENERATORS.some((gen) => software.includes(gen))) {
+        hasC2PA = true; // treat as provenance signal even without formal C2PA
+        console.log("Detected AI generator signature:", softwareTag);
+      }
+    } catch (parseErr) {
+      console.log(
+        "EXIF parsing failed (likely stripped image):",
+        parseErr instanceof Error ? parseErr.message : "unknown error",
+      );
+      // exifr throws on stripped images — that's fine, flag it
     }
-  } catch {
-    // exifr throws on stripped images — that's fine, flag it
-  }
 
-  const isStripped = Object.keys(rawExif).length < 3;
-  return { hasC2PA, softwareTag, isStripped, rawExif };
+    const isStripped = Object.keys(rawExif).length < 3;
+    console.log(
+      `Metadata scan complete: stripped=${isStripped}, hasC2PA=${hasC2PA}, software=${softwareTag}`,
+    );
+
+    return { hasC2PA, softwareTag, isStripped, rawExif };
+  } catch (err) {
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    console.error("Metadata scan error:", err);
+    throw new Error(`Metadata scan failed: ${errorMsg}`);
+  }
 }

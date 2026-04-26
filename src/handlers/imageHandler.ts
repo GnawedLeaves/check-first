@@ -18,20 +18,34 @@ export async function handleWebhook(body: any): Promise<void> {
   try {
     await sendWhatsAppMessage(to, "🔍 Scanning image... please wait.");
 
+    await sendWhatsAppMessage(to, "📥 Downloading image from WhatsApp...");
     const imageBuffer = await downloadWhatsAppImage(mediaId);
+    await sendWhatsAppMessage(
+      to,
+      `✅ Image downloaded (${imageBuffer.length} bytes)`,
+    );
 
-    const [aiResult, metaResult] = await Promise.all([
-      detectAI(imageBuffer),
-      scanMetadata(imageBuffer),
-    ]);
+    await sendWhatsAppMessage(to, "🤖 Analyzing for AI generation...");
+    const aiResult = await detectAI(imageBuffer);
+    await sendWhatsAppMessage(
+      to,
+      `✅ AI analysis complete (${Math.round(aiResult.score * 100)}% confidence)`,
+    );
 
+    await sendWhatsAppMessage(to, "🔍 Scanning image metadata...");
+    const metaResult = await scanMetadata(imageBuffer);
+    await sendWhatsAppMessage(to, "✅ Metadata scan complete");
+
+    await sendWhatsAppMessage(to, "📊 Composing final verdict...");
     const reply = composeVerdict(aiResult, metaResult);
     await sendWhatsAppMessage(to, reply);
   } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    const stack = err instanceof Error ? err.stack : "";
     console.error("Pipeline error:", err);
     await sendWhatsAppMessage(
       to,
-      "⚠️ Sorry, I could not scan that image. Please try again.",
+      `❌ Error in pipeline:\n\n${errorMessage}\n\n${stack}`,
     );
   }
 }
