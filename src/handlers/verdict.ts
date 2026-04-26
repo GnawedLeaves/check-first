@@ -9,20 +9,21 @@ export function composeVerdict(
 
   if (ai.label === "ai" || meta.hasC2PA) {
     return (
-      `🚨 *ScamShield Warning*\n\n` +
-      `This image looks *artificial*.\n` +
+      `🚨 *CheckFirst Warning*\n\n` +
+      `This image looks *super fake*.\n` +
       `AI probability: *${pct}%*\n` +
       (meta.hasC2PA
         ? `🔍 Detected: Created by AI software${meta.softwareTag ? ` (${meta.softwareTag})` : ""}\n`
         : "") +
-      `\n⛔ *Do NOT send money or personal information based on this image.*\n` +
-      `If someone sent you this, they may be trying to trick you.`
+      `\n⛔ *Be careful to not send money or believe in this slop*\n` +
+      `\nIt could be a scam!!!` +
+      `\n\n_Made by marcel (https://marcelyap.dev/)_`
     );
   }
 
   if (ai.label === "uncertain") {
     return (
-      `⚠️ *ScamShield Notice*\n\n` +
+      `⚠️ *CheckFirst Notice*\n\n` +
       `This image *may* have been edited or AI-generated.\n` +
       `AI probability: *${pct}%*\n` +
       (meta.isStripped
@@ -33,9 +34,10 @@ export function composeVerdict(
   }
 
   return (
-    `✅ *ScamShield: No issues found*\n\n` +
+    `✅ *CheckFirst: No issues found*\n\n` +
     `AI probability: *${pct}%*\n` +
-    `This image appears to be real.\n\n` +
-    `_Always stay alert — forward suspicious images here anytime._`
+    `This image seems legit you can trust it but it could still be photoshopped.\n\n` +
+    `_If you are unsure, then send more images here_` +
+    `\n\n_Made by marcel (https://marcelyap.dev/)_`
   );
 }

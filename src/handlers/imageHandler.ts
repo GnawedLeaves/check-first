@@ -27,14 +27,14 @@ export async function handleWebhook(body: any): Promise<void> {
 
     await sendWhatsAppMessage(to, "🤖 Analyzing for AI generation...");
     const aiResult = await detectAI(imageBuffer);
-    await sendWhatsAppMessage(
-      to,
-      `✅ AI analysis complete (${Math.round(aiResult.score * 100)}% confidence)`,
-    );
+    // await sendWhatsAppMessage(
+    //   to,
+    //   `✅ AI analysis complete (${Math.round(aiResult.score * 100)}% confidence)`,
+    // );
 
     await sendWhatsAppMessage(to, "🔍 Scanning image metadata...");
     const metaResult = await scanMetadata(imageBuffer);
-    await sendWhatsAppMessage(to, "✅ Metadata scan complete");
+    // await sendWhatsAppMessage(to, "✅ Metadata scan complete");
 
     await sendWhatsAppMessage(to, "📊 Composing final verdict...");
     const reply = composeVerdict(aiResult, metaResult);

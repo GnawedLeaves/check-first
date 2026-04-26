@@ -31,6 +31,6 @@ app.post("/webhook", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("🚀 ScamShield Vision Server is online!");
+  res.send("🚀 CheckFirst Vision Server is online!");
 });
-app.listen(3000, () => console.log("ScamShield Vision running on :3000"));
+app.listen(3000, () => console.log("CheckFirst Vision running on :3000"));
