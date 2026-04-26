@@ -9,7 +9,7 @@ export function composeVerdict(
 
   if (ai.label === "ai" || meta.hasC2PA) {
     return (
-      `🚨 *CheckFirst Warning*\n\n` +
+      `🚨 *CheckFirstLah Warning*\n\n` +
       `This image looks *super fake*.\n` +
       `AI probability: *${pct}%*\n` +
       (meta.hasC2PA
@@ -23,7 +23,7 @@ export function composeVerdict(
 
   if (ai.label === "uncertain") {
     return (
-      `⚠️ *CheckFirst Notice*\n\n` +
+      `⚠️ *CheckFirstLah Notice*\n\n` +
       `This image *may* have been edited or AI-generated.\n` +
       `AI probability: *${pct}%*\n` +
       (meta.isStripped
@@ -34,7 +34,7 @@ export function composeVerdict(
   }
 
   return (
-    `✅ *CheckFirst: No issues found*\n\n` +
+    `✅ *CheckFirstLah: No issues found*\n\n` +
     `AI probability: *${pct}%*\n` +
     `This image seems legit you can trust it but it could still be photoshopped.\n\n` +
     `_If you are unsure, then send more images here_` +
