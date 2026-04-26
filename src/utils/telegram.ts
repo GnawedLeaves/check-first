@@ -90,8 +90,8 @@ export function initTelegramBot(): TelegramBot {
   bot.onText(/\/start/, async (msg) => {
     await bot.sendMessage(
       msg.chat.id,
-      `👋 *Welcome to CheckFirstLah Bot *\n\n` +
-        `Send me any image and I'll tell you:\n` +
+      `👋 *Welcome to Check First Lah Bot *\n\n` +
+        `Send me any image and our chicken on duty will tell you:\n` +
         `• If looks AI-generated\n` +
         `• If it carries AI tool signatures\n` +
         `• If you should trust it\n\n` +

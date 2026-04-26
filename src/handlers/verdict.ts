@@ -7,37 +7,41 @@ export function composeVerdict(
 ): string {
   const pct = Math.round(ai.score * 100);
 
+  const chickensOnDuty = ["Snowie", "Queenie"];
+  const randomIndex = Math.floor(Math.random() * 2);
+  const chicken = chickensOnDuty[randomIndex];
+
   if (ai.label === "ai" || meta.hasC2PA) {
     return (
-      `🚨 *CheckFirstLah Warning*\n\n` +
-      `This image looks *super fake*.\n` +
+      `🚨 *SQUAWK! ${chicken} says there's something FOWL!* 🚨\n\n` +
+      `This image looks *cluckin' fake*! 🍗\n` +
       `AI probability: *${pct}%*\n` +
       (meta.hasC2PA
-        ? `🔍 Detected: Created by AI software${meta.softwareTag ? ` (${meta.softwareTag})` : ""}\n`
+        ? `🪶 *Egg-spert Evidence:* Created by AI software${meta.softwareTag ? ` (${meta.softwareTag})` : ""}\n`
         : "") +
-      `\n⛔ *Be careful to not send money or believe in this slop*\n` +
-      `\nIt could be a scam!!!` +
-      `\n\n_Made by marcel (https://marcelyap.dev/)_`
+      `\n⛔ *Don't be a coo coo!* Do not send money or believe this AI-generated slop.\n` +
+      `\nThis is definitely a scam! Stay safe in the coop.` +
+      `\n\n_Hatched by marcel (https://marcelyap.dev/)_`
     );
   }
 
   if (ai.label === "uncertain") {
     return (
-      `⚠️ *CheckFirstLah Notice*\n\n` +
-      `This image *may* have been edited or AI-generated.\n` +
+      `⚠️ *Something's Smellin' Fowl...* ⚠️\n\n` +
+      `I'm scratching my head on this one. It *might* be AI-generated.\n` +
       `AI probability: *${pct}%*\n` +
       (meta.isStripped
-        ? `📦 Note: Image was compressed, some checks were limited.\n`
+        ? `📦 *Note:* Metadata was stripped. Hard to see through the coop! \n`
         : "") +
-      `\nBe cautious. Verify through other means before trusting this image.`
+      `\nBe cautious, little chick. Verify before you trust this image!`
     );
   }
 
   return (
-    `✅ *CheckFirstLah: No issues found*\n\n` +
+    `✅ *${chicken} says it looks Egg-cellent!* ✅\n\n` +
     `AI probability: *${pct}%*\n` +
-    `This image seems legit you can trust it but it could still be photoshopped.\n\n` +
-    `_If you are unsure about any image, send them here!_` +
-    `\n\n_Made by marcel (https://marcelyap.dev/)_`
+    `This image seems legit! No foul play detected, though it could still be a sneaky photoshop hehe.\n\n` +
+    `_If you find more suspicious slop, send them to the chicks!_` +
+    `\n\n_Hatched by marcel (https://marcelyap.dev/)_`
   );
 }
