@@ -20,7 +20,6 @@ export function composeVerdict(
         ? `🪶 *Egg-spert Evidence:* Created by AI software${meta.softwareTag ? ` (${meta.softwareTag})` : ""}\n`
         : "") +
       `\n⛔ *Don't be a coo coo!* Do not send money or believe this AI-generated slop.\n` +
-      `\nThis is definitely a scam! Stay safe in the coop.` +
       `\n\n_Hatched by marcel (https://marcelyap.dev/)_`
     );
   }
