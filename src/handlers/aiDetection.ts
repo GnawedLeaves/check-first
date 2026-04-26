@@ -10,7 +10,10 @@ export async function detectAI(
 ): Promise<AIDetectionResult> {
   try {
     const formData = new FormData();
-    formData.append("image", new Uint8Array(imageBuffer) as any, "image.jpg");
+    const blob = new Blob([new Uint8Array(imageBuffer)], {
+      type: "image/jpeg",
+    });
+    formData.append("image", blob, "image.jpg");
 
     console.log("Calling The Hive AI API...");
     const res = await axios.post(
