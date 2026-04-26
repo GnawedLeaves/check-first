@@ -5,10 +5,9 @@
   "description": "AI to spot AI generated images for elderly on whatsapp",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm install --include=dev && tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
