@@ -9,32 +9,42 @@ export async function detectAI(
   imageBuffer: Buffer,
 ): Promise<AIDetectionResult> {
   try {
-    const formData = new FormData();
-    const blob = new Blob([new Uint8Array(imageBuffer)], {
-      type: "image/jpeg",
-    });
-    formData.append("image", blob, "image.jpg");
+    const base64Image = imageBuffer.toString("base64");
 
     console.log("Calling The Hive AI API...");
     console.log(
       `Using API key: ${process.env.HIVE_API_KEY?.substring(0, 8)}...`,
     );
-    const res = await axios.post(
-      "https://api.thehive.ai/api/v2/task/sync",
-      formData,
+
+    const res = await fetch(
+      "https://api.thehive.ai/api/v3/hive/ai-generated-and-deepfake-content-detection",
       {
+        method: "POST",
         headers: {
-          Authorization: `Token ${process.env.HIVE_API_KEY}`,
-          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${process.env.HIVE_API_KEY}`,
+          "Content-Type": "application/json",
         },
-        params: { model: "ai-generated-image" },
+        body: JSON.stringify({
+          media_metadata: true,
+          input: [{ media_base64: `data:image/jpeg;base64,${base64Image}` }],
+        }),
       },
     );
 
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    }
+
+    const data: any = await res.json();
     console.log("The Hive API response received");
-    const classes = res.data.status[0].response.output[0].classes;
-    const aiClass = classes.find((c: any) => c.class === "ai_generated");
-    const score: number = aiClass?.score ?? 0;
+
+    const outputs = data.output?.[0];
+    if (!outputs) {
+      throw new Error("No output data from The Hive API");
+    }
+
+    const aiScore = outputs.predictions?.ai_generated_and_deepfake_content ?? 0;
+    const score: number = aiScore;
 
     console.log(`AI Detection score: ${score}`);
     return {
@@ -42,18 +52,7 @@ export async function detectAI(
       label: score > 0.75 ? "ai" : score > 0.4 ? "uncertain" : "real",
     };
   } catch (err) {
-    let errorMsg = "Unknown error";
-    if (axios.isAxiosError(err)) {
-      errorMsg = `HTTP ${err.response?.status}: ${err.response?.statusText || "Unknown"} - ${JSON.stringify(err.response?.data || "No response data")}`;
-      console.error("The Hive API error response:", {
-        status: err.response?.status,
-        statusText: err.response?.statusText,
-        data: err.response?.data,
-        headers: err.response?.headers,
-      });
-    } else if (err instanceof Error) {
-      errorMsg = err.message;
-    }
+    const errorMsg = err instanceof Error ? err.message : String(err);
     console.error("AI Detection error:", err);
     throw new Error(`AI Detection failed: ${errorMsg}`);
   }
