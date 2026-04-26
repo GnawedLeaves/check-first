@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { handleWebhook } from "./handlers/imageHandler.js";
 import { initTelegramBot } from "./utils/telegram.js";
