@@ -132,9 +132,7 @@ export function initTelegramBot(): TelegramBot {
         `• If it carries AI tool signatures\n` +
         `• If you should trust it\n\n` +
         `_Forward images directly from other chats or upload an image. 🐓_\n\n` +
-        `*Chickens on duty:\n
-            - Snowie 🐔☃️\n
-            - Queenie 🐔👑\n` +
+        `*Chickens on duty:\n- Snowie 🐔☃️\n- Queenie 🐔👑\n` +
         // `Commands:\n` +
         // `/stats - See your scanning statistics`,
         { parse_mode: "Markdown" },
