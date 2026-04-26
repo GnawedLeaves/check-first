@@ -60,7 +60,10 @@ export function initTelegramBot(): TelegramBot {
     }
 
     try {
-      await bot.sendMessage(chatId, "🔍 Scanning image... please wait.");
+      await bot.sendMessage(
+        chatId,
+        "🔍 Chickens are pecking your image... please wait...",
+      );
 
       const fileInfo = await bot.getFile(doc.file_id);
       const fileUrl = `https://api.telegram.org/file/bot${TOKEN}/${fileInfo.file_path}`;
