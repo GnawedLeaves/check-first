@@ -37,7 +37,7 @@ export function composeVerdict(
     `✅ *CheckFirstLah: No issues found*\n\n` +
     `AI probability: *${pct}%*\n` +
     `This image seems legit you can trust it but it could still be photoshopped.\n\n` +
-    `_If you are unsure, then send more images here_` +
+    `_If you are unsure about any image, send them here!_` +
     `\n\n_Made by marcel (https://marcelyap.dev/)_`
   );
 }

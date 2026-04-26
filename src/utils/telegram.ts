@@ -90,12 +90,12 @@ export function initTelegramBot(): TelegramBot {
   bot.onText(/\/start/, async (msg) => {
     await bot.sendMessage(
       msg.chat.id,
-      `👋 *Welcome to CheckFirstLah Vision*\n\n` +
-        `Send me any suspicious image and I'll tell you:\n` +
-        `• Whether it looks AI-generated\n` +
+      `👋 *Welcome to CheckFirstLah Bot *\n\n` +
+        `Send me any image and I'll tell you:\n` +
+        `• If looks AI-generated\n` +
         `• If it carries AI tool signatures\n` +
-        `• Whether you should trust it\n\n` +
-        `_Forward images directly from other chats — no need to save and re-upload._`,
+        `• If you should trust it\n\n` +
+        `_Forward images directly from other chats or upload an image. :D_`,
       { parse_mode: "Markdown" },
     );
   });
