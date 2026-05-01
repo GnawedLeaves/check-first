@@ -131,10 +131,8 @@ export function initTelegramBot(): TelegramBot {
         `• If looks AI-generated\n` +
         `• If it carries AI tool signatures\n` +
         `• If you should trust it\n\n` +
-        `_Forward images directly from other chats or upload an image. 🐓_\n\n` +
-        `*Chickens on duty: Snowie 🐔☃️ & Queenie 🐔👑`,
-      // `Commands:\n` +
-      // `/stats - See your scanning statistics`,
+        `_Forward images directly from other chats or upload an image._\n\n` +
+        `*Chickens on duty: \n 1. Snowie 🐔☃️ \n 2. Queenie 🐔👑`,
       { parse_mode: "Markdown" },
     );
   });
