@@ -11,11 +11,6 @@ export async function detectAI(
   try {
     const base64Image = imageBuffer.toString("base64");
 
-    console.log("Calling The Hive AI API...");
-    console.log(
-      `Using API key: ${process.env.HIVE_API_KEY?.substring(0, 8)}...`,
-    );
-
     const res = await fetch(
       "https://api.thehive.ai/api/v3/hive/ai-generated-and-deepfake-content-detection",
       {
@@ -36,7 +31,6 @@ export async function detectAI(
     }
 
     const data: any = await res.json();
-    console.log("The Hive API response received");
 
     const outputs = data.output?.[0];
     if (!outputs || !outputs.classes) {
@@ -49,7 +43,6 @@ export async function detectAI(
     );
     const score: number = aiClass?.value ?? 0;
 
-    console.log(`AI Detection score: ${score}`);
     return {
       score,
       label: score > 0.75 ? "ai" : score > 0.4 ? "uncertain" : "real",

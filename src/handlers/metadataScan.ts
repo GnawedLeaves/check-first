@@ -28,14 +28,12 @@ export async function scanMetadata(
     let hasC2PA = false;
 
     try {
-      console.log("Parsing EXIF metadata...");
       rawExif =
         (await exifr.parse(imageBuffer, {
           xmp: true,
           iptc: true,
           icc: true,
         })) ?? {};
-      console.log("EXIF data found:", Object.keys(rawExif).length, "fields");
 
       // Check Software tag — AI tools often sign their output
       const software = rawExif.Software?.toLowerCase() ?? "";
@@ -45,20 +43,12 @@ export async function scanMetadata(
       // Detect known AI generator signatures in software tag
       if (AI_GENERATORS.some((gen) => software.includes(gen))) {
         hasC2PA = true; // treat as provenance signal even without formal C2PA
-        console.log("Detected AI generator signature:", softwareTag);
       }
     } catch (parseErr) {
-      console.log(
-        "EXIF parsing failed (likely stripped image):",
-        parseErr instanceof Error ? parseErr.message : "unknown error",
-      );
       // exifr throws on stripped images — that's fine, flag it
     }
 
     const isStripped = Object.keys(rawExif).length < 3;
-    console.log(
-      `Metadata scan complete: stripped=${isStripped}, hasC2PA=${hasC2PA}, software=${softwareTag}`,
-    );
 
     return { hasC2PA, softwareTag, isStripped, rawExif };
   } catch (err) {

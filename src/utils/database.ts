@@ -20,9 +20,6 @@ export async function saveImageResult(result: ImageCheckResult): Promise<void> {
       ...result,
       createdAt: new Date().toISOString(),
     });
-    console.log(
-      `✅ Saved image result for chat ${result.chatId}: AI=${result.isAI}`,
-    );
   } catch (err) {
     console.error("Error saving image result:", err);
     throw err;
