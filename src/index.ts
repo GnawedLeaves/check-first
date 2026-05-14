@@ -42,6 +42,10 @@ app.get("/", (req, res) => {
   res.status(200).json({ status: "CheckFirstLah Vision is running" });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "Server is healthy!" });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
   // Register Telegram webhook on startup
