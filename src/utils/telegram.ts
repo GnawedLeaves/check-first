@@ -129,13 +129,13 @@ export function initTelegramBot(): TelegramBot {
     try {
       await bot.sendMessage(
         msg.chat.id,
-        `👋 *Welcome to Check First Lah Bot *\n\n` +
-          `Send or forward any image and our chicken on duty* will tell you:\n` +
-          `• If looks AI-generated\n` +
+        `👋 *Welcome to Check First Lah Bot*\n\n` +
+          `Send or forward any image and our chicken on duty will tell you:\n` +
+          `• If it looks AI-generated\n` +
           `• If it carries AI tool signatures\n` +
           `• If you should trust it\n\n` +
           `_Forward images directly from other chats or upload an image. 🐓_\n\n` +
-          `Chickens on duty: \n 1. Snowie 🐔☃️ \n 2. Queenie 🐔👑`,
+          `Chickens on duty:\n1. Snowie 🐔☃️\n2. Queenie 🐔👑`,
         { parse_mode: "Markdown" },
       );
     } catch (err) {

@@ -51,6 +51,5 @@ app.listen(PORT, async () => {
   // Register Telegram webhook on startup
   const webhookUrl = `https://${process.env.RENDER_EXTERNAL_HOSTNAME}/telegram/${TELEGRAM_TOKEN}`;
   await bot.setWebHook(webhookUrl);
+  console.log(`CheckFirstLah Vision running on :${PORT}`);
 });
-
-app.listen(3000, () => console.log("CheckFirstLah Vision running on :3000"));

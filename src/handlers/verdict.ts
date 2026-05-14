@@ -37,7 +37,7 @@ export function composeVerdict(
   }
 
   return (
-    `✅ *${chicken} says it looks Egg-cellent!* 🐔☃️✅\n\n` +
+    `✅ *${chicken}🐔 says it looks Egg-cellent!* ✅\n\n` +
     `AI probability: *${pct}%*\n` +
     `This image seems legit! No _fowl_ play detected, though it could still be a sneaky photoshop pok pok.\n\n` +
     `_If you find more suspicious slop, send them to the chickies!_` +
