@@ -56,7 +56,7 @@ export async function handleWebhook(body: any): Promise<void> {
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     const stack = err instanceof Error ? err.stack : "";
-    console.error("Pipeline error:", err);
+    console.error("Pipeline error:", errorMessage, stack);
     await sendWhatsAppMessage(
       to,
       `❌ Error in pipeline:\n\n${errorMessage}\n\n${stack}`,

@@ -62,8 +62,9 @@ export function initTelegramBot(): TelegramBot {
       // Send verdict — parse_mode Markdown renders *bold* and _italic_
       await bot.sendMessage(chatId, verdict, { parse_mode: "Markdown" });
     } catch (err) {
-      console.error("Telegram pipeline error:", err);
       const errorMsg = err instanceof Error ? err.message : String(err);
+      const errorStack = err instanceof Error ? err.stack : "";
+      console.error("Telegram pipeline error:", errorMsg, errorStack);
       await bot.sendMessage(chatId, `⚠️ Error scanning image:\n\n${errorMsg}`);
     }
   });
@@ -116,8 +117,9 @@ export function initTelegramBot(): TelegramBot {
 
       await bot.sendMessage(chatId, verdict, { parse_mode: "Markdown" });
     } catch (err) {
-      console.error("Telegram document error:", err);
       const errorMsg = err instanceof Error ? err.message : String(err);
+      const errorStack = err instanceof Error ? err.stack : "";
+      console.error("Telegram document error:", errorMsg, errorStack);
       await bot.sendMessage(chatId, `⚠️ Error scanning file:\n\n${errorMsg}`);
     }
   });
