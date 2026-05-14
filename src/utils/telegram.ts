@@ -126,17 +126,23 @@ export function initTelegramBot(): TelegramBot {
 
   // Welcome message
   bot.onText(/\/start/, async (msg) => {
-    await bot.sendMessage(
-      msg.chat.id,
-      `👋 *Welcome to Check First Lah Bot *\n\n` +
-        `Send or forward any image and our chicken on duty* will tell you:\n` +
-        `• If looks AI-generated\n` +
-        `• If it carries AI tool signatures\n` +
-        `• If you should trust it\n\n` +
-        `_Forward images directly from other chats or upload an image. 🐓_\n\n` +
-        `Chickens on duty: \n 1. Snowie 🐔☃️ \n 2. Queenie 🐔👑`,
-      { parse_mode: "Markdown" },
-    );
+    try {
+      await bot.sendMessage(
+        msg.chat.id,
+        `👋 *Welcome to Check First Lah Bot *\n\n` +
+          `Send or forward any image and our chicken on duty* will tell you:\n` +
+          `• If looks AI-generated\n` +
+          `• If it carries AI tool signatures\n` +
+          `• If you should trust it\n\n` +
+          `_Forward images directly from other chats or upload an image. 🐓_\n\n` +
+          `Chickens on duty: \n 1. Snowie 🐔☃️ \n 2. Queenie 🐔👑`,
+        { parse_mode: "Markdown" },
+      );
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      const errorStack = err instanceof Error ? err.stack : "";
+      console.error("Start command error:", errorMsg, errorStack);
+    }
   });
 
   // Stats command
@@ -162,8 +168,9 @@ export function initTelegramBot(): TelegramBot {
 
       await bot.sendMessage(chatId, message, { parse_mode: "Markdown" });
     } catch (err) {
-      console.error("Stats error:", err);
       const errorMsg = err instanceof Error ? err.message : String(err);
+      const errorStack = err instanceof Error ? err.stack : "";
+      console.error("Stats error:", errorMsg, errorStack);
       await bot.sendMessage(chatId, `⚠️ Could not fetch stats:\n\n${errorMsg}`);
     }
   });
